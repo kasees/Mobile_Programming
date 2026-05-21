@@ -8,7 +8,7 @@ $(document).ready(function () {
   });
 
   $("#change-name").click(function () {
-    $("#student-name").text("Suva Bhattarai");
+    $("#student-name").text("Kasees Gurung");
   });
 
   $("#show-bio").click(function () {
