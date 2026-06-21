@@ -1,0 +1,878 @@
+/* ================= COLOR VARIABLES ================= */
+
+:root{
+    --gov-blue:#1B4F8A;
+    --gov-blue-dark:#123A66;
+    --gov-blue-light:#E7EFF8;
+    --amber:#F5A623;
+    --amber-dark:#D6900F;
+    --amber-light:#FFF3DD;
+    --text-dark:#1f2937;
+    --text-light:#6b7280;
+    --bg:#FAF6EF;
+    --panel-bg:#ffffff;
+    --border:#ECDFC4;
+    --shadow:0 8px 20px rgba(27,79,138,.08);
+}
+
+[data-theme="dark"]{
+    --bg:#10151c;
+    --panel-bg:#1a2230;
+    --border:#2b3850;
+    --text-dark:#eef2f7;
+    --text-light:#9aa7b8;
+    --gov-blue-light:#1a2738;
+    --amber-light:#3a2c14;
+    --shadow:0 8px 24px rgba(0,0,0,.5);
+}
+
+/* ================= BASE ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+}
+
+body{
+    font-family:"Segoe UI","Noto Sans Devanagari",Tahoma,Geneva,Verdana,sans-serif;
+    background:var(--bg);
+    color:var(--text-dark);
+    min-height:100vh;
+    transition:background .4s, color .4s;
+}
+
+.screen{
+    display:none;
+    animation:fadeIn .35s ease;
+}
+
+.screen.active{
+    display:block;
+}
+
+@keyframes fadeIn{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+/* ================= LOADER ================= */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,var(--gov-blue),var(--gov-blue-dark));
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    z-index:9999;
+    transition:opacity .5s, visibility .5s;
+}
+
+#loader.hidden{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loaderLogo{
+    animation:pulse 1.2s infinite ease-in-out;
+}
+
+#loader p{
+    margin-top:15px;
+    letter-spacing:1px;
+    font-size:14px;
+    opacity:.85;
+}
+
+@keyframes pulse{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.15); }
+}
+
+/* ================= LOGIN ================= */
+
+.centerBox{
+    width:380px;
+    max-width:92%;
+    margin:60px auto;
+    background:var(--panel-bg);
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:var(--shadow);
+    border:1px solid var(--border);
+    border-top:5px solid var(--amber);
+    animation:slideUp .5s ease;
+}
+
+@keyframes slideUp{
+    from{ opacity:0; transform:translateY(30px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+.logoWrap{
+    display:flex;
+    justify-content:center;
+    margin-bottom:10px;
+}
+
+.logoCircle{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--gov-blue),var(--gov-blue-dark));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 0 0 6px var(--amber-light);
+    animation:rotateIn .6s ease;
+}
+
+@keyframes rotateIn{
+    from{ transform:rotate(-180deg) scale(0); opacity:0; }
+    to{ transform:rotate(0) scale(1); opacity:1; }
+}
+
+.centerBox h1{
+    color:var(--gov-blue);
+    font-size:30px;
+    margin-bottom:6px;
+    font-weight:800;
+}
+
+.centerBox p{
+    color:var(--text-light);
+    margin-bottom:25px;
+    font-size:15px;
+}
+
+.hint{
+    margin-top:14px !important;
+    font-size:12px !important;
+    color:var(--text-light);
+    opacity:.7;
+}
+
+/* ================= INPUT ================= */
+
+input,
+select{
+    width:100%;
+    padding:14px 16px;
+    margin:9px 0;
+    font-size:15px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    outline:none;
+    background:var(--panel-bg);
+    color:var(--text-dark);
+    transition:.25s;
+}
+
+input:focus,
+select:focus{
+    border-color:var(--gov-blue);
+    box-shadow:0 0 0 4px rgba(27,79,138,.15);
+}
+
+/* ================= BUTTON ================= */
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    background:var(--gov-blue);
+    color:white;
+    border:none;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:.3px;
+    cursor:pointer;
+    transition:.25s;
+    position:relative;
+    overflow:hidden;
+}
+
+button:hover{
+    background:var(--gov-blue-dark);
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(27,79,138,.25);
+}
+
+button:active{
+    transform:scale(.97);
+}
+
+/* ripple effect */
+button::after{
+    content:"";
+    position:absolute;
+    width:0;
+    height:0;
+    border-radius:50%;
+    background:rgba(255,255,255,.4);
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    transition:width .4s, height .4s;
+}
+
+button:active::after{
+    width:220px;
+    height:220px;
+}
+
+.logoutBtn{
+    background:#c0392b;
+}
+
+.logoutBtn:hover{
+    background:#a4291b;
+}
+
+.backBtn{
+    background:var(--text-light);
+}
+
+.backBtn:hover{
+    background:#52606d;
+}
+
+/* ================= APP LAYOUT ================= */
+
+.app{
+    max-width:1200px;
+    margin:auto;
+    padding:24px 24px 100px;
+}
+
+/* ================= TOP BAR ================= */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:16px;
+    width:100%;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+}
+
+.brand h3{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.brandLogo{
+    background:var(--amber-light);
+    border-radius:50%;
+    padding:8px;
+    flex-shrink:0;
+    display:flex;
+}
+
+.topbar h3{
+    font-size:19px;
+    color:var(--gov-blue);
+}
+
+.topbarRight{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-shrink:0;
+}
+
+.bell{
+    position:relative;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.bell:hover{
+    transform:scale(1.15);
+}
+
+.badge{
+    position:absolute;
+    top:-6px;
+    right:-8px;
+    background:var(--amber);
+    color:#1f2937;
+    font-size:11px;
+    font-weight:800;
+    padding:2px 6px;
+    border-radius:10px;
+    min-width:18px;
+    text-align:center;
+}
+
+.dateBadge{
+    background:var(--amber-light);
+    color:var(--amber-dark);
+    padding:7px 12px;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.logoutIcon{
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+    background:#fdeceb;
+    color:#c0392b;
+    border-radius:10px;
+    padding:9px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    flex-shrink:0;
+    white-space:nowrap;
+}
+
+.logoutIcon:hover{
+    transform:scale(1.05);
+    background:#fadbd8;
+}
+
+/* ================= ALERT BAR ================= */
+
+.alertBar{
+    background:linear-gradient(90deg,var(--amber-light),transparent);
+    color:var(--gov-blue);
+    padding:16px;
+    border-left:6px solid var(--amber);
+    border-radius:15px;
+    margin-bottom:24px;
+    font-weight:700;
+    font-size:14px;
+    box-shadow:var(--shadow);
+    animation:glow 2.5s infinite alternate;
+}
+
+@keyframes glow{
+    from{ box-shadow:0 0 0 rgba(245,166,35,0); }
+    to{ box-shadow:0 0 16px rgba(245,166,35,.35); }
+}
+
+/* ================= STAT GRID ================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:16px;
+    margin-bottom:26px;
+}
+
+.card{
+    background:var(--panel-bg);
+    border-radius:16px;
+    padding:22px;
+    text-align:center;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 16px 30px rgba(27,79,138,.15);
+}
+
+.cardIcon{
+    display:flex;
+    justify-content:center;
+    margin-bottom:4px;
+}
+
+.card h2{
+    margin:10px 0;
+    color:var(--gov-blue);
+    font-size:30px;
+    font-weight:800;
+}
+
+.card p{
+    color:var(--text-light);
+    font-size:14px;
+}
+
+h3{
+    margin:24px 0 14px;
+    color:var(--gov-blue);
+    font-size:18px;
+    font-weight:700;
+}
+
+/* ================= QUICK ACTIONS ================= */
+
+.quick{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:26px;
+}
+
+.quick div{
+    background:var(--panel-bg);
+    border-radius:16px;
+    padding:18px 10px;
+    text-align:center;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    transition:.3s;
+}
+
+.qIcon{
+    display:flex;
+    justify-content:center;
+    margin-bottom:6px;
+}
+
+.quick div:hover{
+    background:linear-gradient(135deg,var(--gov-blue),var(--gov-blue-dark));
+    color:white;
+    transform:translateY(-5px);
+}
+
+/* ================= PANEL ================= */
+
+.panel{
+    background:var(--panel-bg);
+    padding:24px;
+    border-radius:18px;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    margin-top:16px;
+    animation:fadeIn .3s ease;
+}
+
+.panel h2{
+    color:var(--gov-blue);
+    margin-bottom:18px;
+    font-size:19px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+/* ================= QUEUE ================= */
+
+.queuePanel{
+    max-width:700px;
+    margin:auto;
+}
+
+.queueBox{
+    background:var(--amber-light);
+    border:2px dashed var(--amber);
+    border-radius:14px;
+    min-height:110px;
+    padding:18px;
+    margin:18px 0;
+    font-size:16px;
+    font-weight:600;
+    color:var(--gov-blue);
+    line-height:1.7;
+}
+
+.queueProgressBar{
+    width:100%;
+    height:10px;
+    background:var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:10px;
+}
+
+.queueProgressFill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--amber),var(--amber-dark));
+    transition:width .6s ease;
+}
+
+/* ================= DOCUMENT LIST ================= */
+
+.docProgressWrap{
+    margin-top:16px;
+}
+
+.docProgressBar{
+    width:100%;
+    height:10px;
+    background:var(--border);
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.docProgressFill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#2E7D5A,#1B4F8A);
+    transition:width .4s ease;
+}
+
+#docProgressText{
+    font-size:12px;
+    color:var(--text-light);
+    display:block;
+    margin-top:6px;
+}
+
+#docList{
+    margin-top:18px;
+}
+
+#docList li{
+    list-style:none;
+    background:var(--gov-blue-light);
+    border-left:6px solid var(--gov-blue);
+    padding:14px 16px;
+    margin:9px 0;
+    border-radius:12px;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    cursor:pointer;
+    transition:.2s;
+    animation:fadeIn .3s ease;
+}
+
+#docList li:hover{
+    transform:translateX(4px);
+}
+
+#docList li.checked{
+    background:#e4f4ec;
+    border-left-color:#2E7D5A;
+    text-decoration:line-through;
+    color:var(--text-light);
+}
+
+.emptyHint{
+    color:var(--text-light);
+    font-size:13px;
+    margin-top:14px;
+    text-align:center;
+}
+
+/* ================= ALERT HISTORY ================= */
+
+.alertHistory{
+    list-style:none;
+    margin-top:8px;
+}
+
+.alertHistory li{
+    background:var(--amber-light);
+    border-left:5px solid var(--amber);
+    padding:13px 15px;
+    margin:9px 0;
+    border-radius:10px;
+    font-size:13px;
+    color:var(--gov-blue);
+}
+
+/* ================= TOAST ================= */
+
+#toast{
+    position:fixed;
+    right:18px;
+    bottom:90px;
+    z-index:999;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.toast{
+    background:var(--gov-blue-dark);
+    color:white;
+    padding:13px 18px;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+    animation:slide .4s ease, fadeOut .4s ease 2.6s forwards;
+    border-left:4px solid var(--amber);
+    font-size:13px;
+}
+
+@keyframes slide{
+    from{ transform:translateX(110%); opacity:0; }
+    to{ transform:translateX(0); opacity:1; }
+}
+
+@keyframes fadeOut{
+    to{ opacity:0; transform:translateX(20px); }
+}
+
+/* ================= BOTTOM LOGOUT (desktop only) ================= */
+
+.bottomBar{
+    max-width:1200px;
+    margin:0 auto 30px;
+    padding:0 30px;
+}
+
+.bottomBar button{
+    max-width:240px;
+}
+
+/* ================= BOTTOM NAV (mobile only) ================= */
+
+.bottomNav{
+    display:none;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:var(--panel-bg);
+    border-top:1px solid var(--border);
+    box-shadow:0 -6px 20px rgba(0,0,0,.08);
+    padding:8px 4px calc(8px + env(safe-area-inset-bottom));
+    z-index:500;
+}
+
+.bottomNav .navRow{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+}
+
+.bottomNav button.navBtn{
+    background:none;
+    border:none;
+    color:var(--text-light);
+    font-size:11px;
+    font-weight:700;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:3px;
+    padding:6px 2px;
+    margin:0;
+    border-radius:10px;
+    width:100%;
+}
+
+.bottomNav button.navBtn::after{
+    display:none;
+}
+
+.bottomNav button.navBtn:hover{
+    transform:none;
+    box-shadow:none;
+    background:var(--amber-light);
+}
+
+.bottomNav button.navBtn.activeNav{
+    color:var(--gov-blue);
+}
+
+.navIcon{
+    display:flex;
+    justify-content:center;
+}
+
+/* ================= ICON IMAGES (replacing emoji) ================= */
+
+.iconImg{
+    width:26px;
+    height:26px;
+    vertical-align:middle;
+    object-fit:contain;
+}
+
+.iconImgSm{
+    width:16px;
+    height:16px;
+    vertical-align:middle;
+    object-fit:contain;
+}
+
+.iconImgLg{
+    width:38px;
+    height:38px;
+    vertical-align:middle;
+    object-fit:contain;
+}
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:var(--gov-blue);
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-track{
+    background:var(--gov-blue-light);
+}
+
+/* ================= TABLET ================= */
+
+@media (max-width:1024px){
+
+.app{
+    padding:20px 20px 100px;
+}
+
+.grid{
+    grid-template-columns:repeat(3,1fr);
+}
+
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width:768px){
+
+body{
+    padding-bottom:70px;
+}
+
+.app{
+    padding:14px 14px 100px;
+    width:100%;
+    max-width:100%;
+}
+
+.topbar h3{
+    font-size:15px;
+}
+
+.dateBadge{
+    display:none;
+}
+
+.logoutIcon{
+    padding:7px 11px;
+    font-size:12px;
+}
+
+.grid{
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.card{
+    padding:12px 6px;
+}
+
+.card h2{
+    font-size:18px;
+    margin:5px 0;
+}
+
+.card p{
+    font-size:10px;
+}
+
+/* hide the desktop quick-action grid, bottom nav replaces it */
+.quick{
+    display:none;
+}
+
+h3{
+    font-size:16px;
+    margin:18px 0 10px;
+}
+
+.centerBox{
+    width:94%;
+    padding:26px;
+    margin:40px auto;
+}
+
+.logoCircle{
+    width:62px;
+    height:62px;
+}
+
+.centerBox h1{
+    font-size:24px;
+}
+
+/* bottom nav only appears after login */
+.bottomNav{
+    display:none;
+}
+
+body.logged-in .bottomNav{
+    display:block;
+}
+
+/* desktop logout button is hidden, topbar icon is used instead */
+.bottomBar{
+    display:none;
+}
+
+#toast{
+    bottom:84px;
+    right:14px;
+    left:14px;
+}
+
+.toast{
+    font-size:12px;
+}
+
+}
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width:420px){
+
+.centerBox h1{
+    font-size:22px;
+}
+
+.panel{
+    padding:16px;
+    width:100%;
+    max-width:100%;
+}
+
+.grid{
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+}
+
+.dateBadge{
+    display:none;
+}
+
+select,
+input{
+    font-size:14px;
+}
+
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SarkariPass</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loaderLogo"><img src="assets/images/logo.png" alt="SarkariPass logo" class="iconImg iconImgLg"></div>
+  <p>Loading SarkariPass...</p>
+</div>
+
+<!-- LOGIN -->
+<section id="loginScreen" class="screen active">
+  <div class="centerBox">
+    <div class="logoWrap"><div class="logoCircle"><img src="assets/images/logo.png" alt="SarkariPass logo" class="iconImg iconImgLg"></div></div>
+    <h1>SarkariPass</h1>
+    <p>Nepal Government Service Portal</p>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Sign In</button>
+    <p class="hint">Demo: enter any username & password</p>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="screen">
+  <div class="app">
+
+    <div class="topbar">
+      <div class="brand">
+        <span class="brandLogo"><img src="assets/images/logo.png" alt="logo" class="iconImg"></span>
+        <h3>Welcome, <span id="userDisplay"></span></h3>
+      </div>
+      <div class="topbarRight">
+        <div class="bell" onclick="openAlerts()"><img src="assets/images/bell.png" alt="alerts" class="iconImg"><span class="badge" id="alertBadge">0</span></div>
+        <span class="dateBadge" id="dateBadge"></span>
+        <div class="logoutIcon" onclick="logout()" title="Logout"><img src="assets/images/logout.png" alt="logout" class="iconImgSm"> Logout</div>
+      </div>
+    </div>
+
+    <div class="alertBar" id="alertBar"><img src="assets/images/bell.png" alt="" class="iconImgSm"> System starting...</div>
+
+    <div class="grid">
+      <div class="card"><div class="cardIcon"><img src="assets/images/ticket.png" alt="tokens" class="iconImg"></div><h2 id="statTokens">247</h2><p>Active Tokens</p></div>
+      <div class="card"><div class="cardIcon"><img src="assets/images/check.png" alt="served" class="iconImg"></div><h2 id="statServed">183</h2><p>Served</p></div>
+      <div class="card"><div class="cardIcon"><img src="assets/images/office.png" alt="offices" class="iconImg"></div><h2>12</h2><p>Offices</p></div>
+    </div>
+
+    <h3>Quick Actions</h3>
+    <div class="quick">
+      <div onclick="openDocs()"><span class="qIcon"><img src="assets/images/document.png" alt="documents" class="iconImg"></span>Documents</div>
+      <div onclick="openQueue()"><span class="qIcon"><img src="assets/images/ticket.png" alt="queue" class="iconImg"></span>Queue</div>
+      <div onclick="openAlerts()"><span class="qIcon"><img src="assets/images/bell.png" alt="alerts" class="iconImg"></span>Alerts</div>
+      <div onclick="toggleTheme()"><span class="qIcon"><img src="assets/images/moon.png" alt="theme" class="iconImg" id="themeIcon"></span>Theme</div>
+    </div>
+
+    <h3>Live Monitor</h3>
+    <div class="panel" id="monitor">Connecting...</div>
+
+  </div>
+
+  <div class="bottomBar">
+    <button class="logoutBtn" onclick="logout()">Logout</button>
+  </div>
+</section>
+
+<!-- DOCUMENTS -->
+<section id="docs" class="screen">
+  <div class="app">
+  <div class="panel">
+    <h2><img src="assets/images/document.png" alt="" class="iconImgSm"> Document Checklist</h2>
+    <select id="serviceTypeSelect" onchange="loadDocs(this.value)">
+      <option value="">Select Service</option>
+      <option value="passport">Passport</option>
+      <option value="citizenship">Citizenship</option>
+      <option value="land">Land</option>
+      <option value="transport">Transport</option>
+    </select>
+
+    <div id="docProgressWrap" class="docProgressWrap" style="display:none;">
+      <div class="docProgressBar"><div class="docProgressFill" id="docProgressFill"></div></div>
+      <span id="docProgressText">0 / 0 collected</span>
+    </div>
+
+    <ul id="docList"></ul>
+    <p class="emptyHint" id="docEmptyHint">Select a service above to see required documents</p>
+
+    <button class="backBtn" onclick="back()">← Back</button>
+  </div>
+  </div>
+</section>
+
+<!-- QUEUE -->
+<section id="queue" class="screen">
+  <div class="app">
+  <div class="panel queuePanel">
+    <h2><img src="assets/images/ticket.png" alt="" class="iconImgSm"> Queue System</h2>
+    <select id="serviceSelect">
+      <option>Passport</option>
+      <option>Citizenship</option>
+      <option>Land</option>
+      <option>Transport</option>
+    </select>
+    <button onclick="takeToken()">Take Token</button>
+    <div id="queueBox" class="queueBox">Press "Take Token" to begin</div>
+    <div class="queueProgressBar" id="queueProgressBar" style="display:none;">
+      <div class="queueProgressFill" id="queueProgressFill"></div>
+    </div>
+    <button class="backBtn" onclick="back()">← Back</button>
+  </div>
+  </div>
+</section>
+
+<!-- ALERTS -->
+<section id="alerts" class="screen">
+  <div class="app">
+  <div class="panel">
+    <h2><img src="assets/images/bell.png" alt="" class="iconImgSm"> Alerts</h2>
+    <ul id="alertHistoryList" class="alertHistory"></ul>
+    <p class="emptyHint" id="alertEmptyHint">No alerts yet. They'll appear here automatically.</p>
+    <button class="backBtn" onclick="back()">← Back</button>
+  </div>
+  </div>
+</section>
+
+<div id="toast"></div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottomNav">
+  <div class="navRow">
+    <button class="navBtn activeNav" id="navHome" onclick="goHome()">
+      <span class="navIcon"><img src="assets/images/home.png" alt="" class="iconImgSm"></span>Home
+    </button>
+    <button class="navBtn" id="navDocs" onclick="openDocs()">
+      <span class="navIcon"><img src="assets/images/document.png" alt="" class="iconImgSm"></span>Docs
+    </button>
+    <button class="navBtn" id="navQueue" onclick="openQueue()">
+      <span class="navIcon"><img src="assets/images/ticket.png" alt="" class="iconImgSm"></span>Queue
+    </button>
+    <button class="navBtn" id="navAlerts" onclick="openAlerts()">
+      <span class="navIcon"><img src="assets/images/bell.png" alt="" class="iconImgSm"></span>Alerts
+    </button>
+    <button class="navBtn" id="navTheme" onclick="toggleTheme()">
+      <span class="navIcon"><img src="assets/images/moon.png" alt="" class="iconImgSm" id="navThemeIcon"></span>Theme
+    </button>
+  </div>
+</nav>
+
+<script type="module" src="js/script.js"></script>
+</body>
+</html>
