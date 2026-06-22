@@ -21,9 +21,9 @@
     const db=getDatabase(app)
 console.log(db)
 const users = [
-  { id: 1, firstname: "Bipin", lastname: "Ghimire", age: 20, address: "Goldhunga" },
-  { id: 2, firstname: "Sita", lastname: "Sharma", age: 22, address: "Kathmandu" },
-  { id: 3, firstname: "Ram", lastname: "Karki", age: 25, address: "Lalitpur" },
+  { id: 1, firstname: "Kasees", lastname: "Gurung", age: 20, address: "Goldhunga" },
+  { id: 2, firstname: "Krrish", lastname: "Gurung", age: 22, address: "Kathmandu" },
+  { id: 3, firstname: "Sarita", lastname: "Gurung", age: 25, address: "Lalitpur" },
   { id: 4, firstname: "Aarav", lastname: "Thapa", age: 19, address: "Bhaktapur" },
   { id: 5, firstname: "Nisha", lastname: "Shrestha", age: 21, address: "Pokhara" },
   { id: 6, firstname: "Kiran", lastname: "Lama", age: 24, address: "Dharan" },
