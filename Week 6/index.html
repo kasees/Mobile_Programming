@@ -1,130 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, sans-serif;
-        }
-
-        body{
-            background:#f5f5f5;
-            padding:20px;
-        }
-
-        .container{
-            max-width:400px;
-            margin:auto;
-        }
-
-        .card{
-            background:white;
-            padding:20px;
-            border-radius:10px;
-            box-shadow:0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom:20px;
-        }
-
-        h2,h3{
-            text-align:center;
-            margin-bottom:15px;
-        }
-
-        input,
-        textarea{
-            width:100%;
-            padding:12px;
-            margin-bottom:12px;
-            border:1px solid #ccc;
-            border-radius:5px;
-        }
-
-        textarea{
-            resize:none;
-            height:100px;
-        }
-
-        button{
-            width:100%;
-            padding:12px;
-            border:none;
-            background:#007bff;
-            color:white;
-            border-radius:5px;
-            cursor:pointer;
-            font-size:16px;
-        }
-
-        button:hover{
-            background:#0056b3;
-        }
-
-        .message-card{
-            border:1px solid #ddd;
-            border-radius:8px;
-            padding:10px;
-            margin-bottom:10px;
-            background:white;
-        }
-
-        .message-card h4{
-            margin-bottom:5px;
-        }
-
-        .message-card p{
-            margin-bottom:5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Firebase CRUD</title>
 </head>
 <body>
 
-<div class="container">
+  <h2>Create User</h2>
+  <input id="create-id" placeholder="User ID">
+  <input id="create-firstname" placeholder="First Name">
+  <input id="create-lastname" placeholder="Last Name">
+  <input id="create-age" placeholder="Age">
+  <input id="create-address" placeholder="Address">
 
-    <!-- Contact Form -->
-    <div class="card">
-        <h2>Contact Us</h2>
+  <button onclick="writeUserData(
+    document.getElementById('create-id').value,
+    document.getElementById('create-firstname').value,
+    document.getElementById('create-lastname').value,
+    document.getElementById('create-age').value,
+    document.getElementById('create-address').value
+  )">
+    Add User
+  </button>
 
-        <input
-            type="text"
-            id="name"
-            placeholder="Enter Your Name"
-        >
+  <hr>
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Enter Your Email"
-        >
+  <h2>Read User</h2>
+  <input id="read-id" placeholder="User ID">
+  <button onclick="readUserById(document.getElementById('read-id').value)">
+    Get User
+  </button>
 
-        <textarea
-            id="message"
-            placeholder="Enter Your Message"
-        ></textarea>
+  <p id="read-result"></p>
 
-        <button onclick="saveMessage()">
-            Submit Message
-        </button>
-    </div>
+  <hr>
 
-    <!-- Messages Section -->
-    <div class="card">
-        <h3>Messages from Database</h3>
+  <h2>Update User</h2>
+  <input id="update-id" placeholder="User ID">
+  <button onclick="fetchUserForUpdate(document.getElementById('update-id').value)">
+    Load User
+  </button>
 
-        <div id="messages">
-            <!-- Firebase data will appear here -->
-        </div>
-    </div>
+  <br><br>
 
-</div>
+  <input id="update-firstname" placeholder="First Name">
+  <input id="update-lastname" placeholder="Last Name">
+  <input id="update-age" placeholder="Age">
+  <input id="update-address" placeholder="Address">
 
-<!-- Link JavaScript File -->
-<script type="module" src="app.js"></script>
+  <button onclick="updateUserData(
+    document.getElementById('update-id').value,
+    {
+      firstname: document.getElementById('update-firstname').value,
+      lastname: document.getElementById('update-lastname').value,
+      age: document.getElementById('update-age').value,
+      address: document.getElementById('update-address').value
+    }
+  )">
+    Update User
+  </button>
+
+  <hr>
+
+  <h2>Delete User</h2>
+  <input id="delete-id" placeholder="User ID">
+  <button onclick="deleteUserData(document.getElementById('delete-id').value)">
+    Delete User
+  </button>
+
+  <script type="module" src="scripts.js"></script>
 
 </body>
 </html>

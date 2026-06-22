@@ -30,105 +30,92 @@ console.log("Firebase Connected");
 // SAVE MESSAGE FUNCTION
 // ======================
 
-function saveMessage() {
-
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message").value.trim();
-
-  if (!name || !email || !message) {
-    alert("Please fill all fields");
-    return;
-  }
-
-  const contactsRef = ref(db, "contacts");
-  const newContactRef = push(contactsRef);
-
-  set(newContactRef, {
-    name: name,
-    email: email,
-    message: message,
-    createdAt: new Date().toLocaleString()
+function writeUserData(userId, firstname, lastname, age, address) {
+  set(ref(db, 'users/' + userId), {
+    firstname,
+    lastname,
+    age,
+    address,
   })
   .then(() => {
-    alert("Message submitted successfully!");
-
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("message").value = "";
-
-    displayMessages();
+    console.log("User added successfully with ID:", userId);
   })
   .catch((error) => {
-    console.error("Error saving message:", error);
+    console.error("Error addding user:", error);
   });
 }
+window.writeUserData = writeUserData;
 
-window.saveMessage = saveMessage;
 
-// ======================
-// DISPLAY DATA FUNCTION
-// ======================
 
-function displayMessages() {
+function readUser(){
+    const userRef = ref(db,'users')
+    get(userRef).then((snapshot)=>{
+        snapshot.forEach((childsnapshot)=>{
+            console.log(childsnapshot.val());
+        })
+    })
+}
+//readUser()
+window.readUser = readUser;
 
-  const contactsRef = ref(db, "contacts");
+// Read a single user by ID and show the result on the page.
+function readUserById(userId) {
+  const userRef = ref(db, 'users/' + userId);
+  get(userRef).then((snapshot) => {
+    const user = snapshot.val();
+    console.log("User found:", user);
+    document.getElementById('read-result').textContent =
+    `First Name: ${user.firstname}
+    Last Name: ${user.lastname}
+    Age: ${user.age}
+    Address: ${user.address}`;
+  });
+}
+window.readUserById = readUserById;
 
-  get(contactsRef)
-    .then((snapshot) => {
+// Fetch an existing user by ID and load their data into the update input fields,
+// so the values can be edited and then saved with updateUserData().
+function fetchUserForUpdate(userId) {
+  const userRef = ref(db, 'users/' + userId);
+  get(userRef).then((snapshot) => {
+    const user = snapshot.val();
+    document.getElementById('update-firstname').value = user.firstname;
+    document.getElementById('update-lastname').value = user.lastname;
+    document.getElementById('update-age').value = user.age;
+    document.getElementById('update-address').value = user.address;
+    console.log("Loaded user into form:", user);
+  });
+}
+window.fetchUserForUpdate = fetchUserForUpdate;
 
-      const messagesDiv = document.getElementById("messages");
-      messagesDiv.innerHTML = "";
-
-      // Check if data exists
-      if (!snapshot.exists()) {
-        console.log("No data found in Firebase");
-        messagesDiv.innerHTML = "<p>No messages found.</p>";
-        return;
-      }
-
-      console.log("===== ALL CONTACT MESSAGES =====");
-
-      // Loop through all records
-      snapshot.forEach((childSnapshot) => {
-
-        const key = childSnapshot.key;
-        const data = childSnapshot.val();
-
-        // 🔥 PRINT IN CONSOLE (IMPORTANT FOR ASSIGNMENT)
-        console.log("ID:", key);
-        console.log("Name:", data.name);
-        console.log("Email:", data.email);
-        console.log("Message:", data.message);
-        console.log("Created At:", data.createdAt);
-        console.log("--------------------------------");
-
-        // SHOW ON WEBPAGE
-        messagesDiv.innerHTML += `
-          <div style="
-            border:1px solid #ddd;
-            padding:12px;
-            margin-bottom:10px;
-            border-radius:8px;
-            background:#fff;
-          ">
-            <h4>${data.name}</h4>
-            <p><strong>Email:</strong> ${data.email}</p>
-            <p><strong>Message:</strong> ${data.message}</p>
-            <small>${data.createdAt}</small>
-          </div>
-        `;
-      });
+function updateUserData(userId, updatedData) {
+  const userRef = ref(db, 'users/' + userId);
+  update(userRef, updatedData)
+    .then(() => {
+      console.log("User updated successfully");
     })
     .catch((error) => {
-      console.error("Error reading messages:", error);
+      console.error("Error updating user:", error);
     });
 }
 
-window.displayMessages = displayMessages;
+// Example usage:
+//updateUserData();
+window.updateUserData = updateUserData;
 
-// ======================
-// LOAD DATA ON PAGE LOAD
-// ======================
 
-displayMessages();
+function deleteUserData(userId) {
+  const userRef = ref(db, 'users/' + userId);
+  remove(userRef)
+    .then(() => {
+      console.log("User deleted successfully");
+    })
+    .catch((error) => {
+      console.error("Error deleting user:", error);
+    });
+}
+
+// Example usage:
+//deleteUserData(2);
+window.deleteUserData = deleteUserData;
